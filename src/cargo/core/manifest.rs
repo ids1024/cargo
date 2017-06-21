@@ -307,7 +307,11 @@ impl VirtualManifest {
 }
 
 impl Target {
-    fn with_path(src_path: PathBuf) -> Target {
+    fn with_path(mut src_path: PathBuf) -> Target {
+        // XXX
+        if src_path.to_str().unwrap().starts_with("file:/") {
+            src_path = PathBuf::from(&src_path.to_str().unwrap()[5..]);
+        }
         assert!(src_path.is_absolute());
         Target {
             kind: TargetKind::Bin,

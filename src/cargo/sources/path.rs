@@ -254,7 +254,7 @@ impl<'cfg> PathSource<'cfg> {
         }
         return Ok(ret);
 
-        #[cfg(unix)]
+        #[cfg(any(unix, target_os = "redox"))]
         fn join(path: &Path, data: &[u8]) -> CargoResult<PathBuf> {
             use std::os::unix::prelude::*;
             use std::ffi::OsStr;

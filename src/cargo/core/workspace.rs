@@ -272,6 +272,9 @@ impl<'cfg> Workspace<'cfg> {
         }
 
         for path in paths::ancestors(manifest_path).skip(2) {
+            if path == Path::new("") {
+                break;
+            }
             let manifest = path.join("Cargo.toml");
             debug!("find_root - trying {}", manifest.display());
             if manifest.exists() {

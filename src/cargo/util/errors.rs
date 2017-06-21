@@ -270,7 +270,7 @@ pub fn process_error(msg: &str,
         }
     }
 
-    #[cfg(windows)]
+    #[cfg(any(windows, target_os = "redox"))]
     fn status_to_string(status: &ExitStatus) -> String {
         status.to_string()
     }

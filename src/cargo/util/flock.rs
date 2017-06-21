@@ -3,8 +3,7 @@ use std::io::*;
 use std::io;
 use std::path::{Path, PathBuf, Display};
 
-use term::color::CYAN;
-use fs2::{FileExt, lock_contended_error};
+//use term::color::CYAN;
 #[allow(unused_imports)]
 use libc;
 
@@ -89,6 +88,7 @@ impl Write for FileLock {
     }
 }
 
+/*
 impl Drop for FileLock {
     fn drop(&mut self) {
         if self.state != State::Unlocked {
@@ -98,6 +98,7 @@ impl Drop for FileLock {
         }
     }
 }
+*/
 
 /// A "filesystem" is intended to be a globally shared, hence locked, resource
 /// in Cargo.
@@ -198,8 +199,8 @@ impl Filesystem {
             path: &Path,
             opts: &OpenOptions,
             state: State,
-            config: &Config,
-            msg: &str) -> CargoResult<FileLock> {
+            _config: &Config,
+            _msg: &str) -> CargoResult<FileLock> {
         let path = self.root.join(path);
 
         // If we want an exclusive lock then if we fail because of NotFound it's
@@ -215,6 +216,7 @@ impl Filesystem {
         }).chain_err(|| {
             format!("failed to open: {}", path.display())
         })?;
+        /*
         match state {
             State::Exclusive => {
                 acquire(config, msg, &path,
@@ -229,6 +231,7 @@ impl Filesystem {
             State::Unlocked => {}
 
         }
+        */
         Ok(FileLock { f: Some(f), path: path, state: state })
     }
 }
@@ -248,11 +251,12 @@ impl Filesystem {
 ///
 /// Returns an error if the lock could not be acquired or if any error other
 /// than a contention error happens.
-fn acquire(config: &Config,
-           msg: &str,
-           path: &Path,
-           try: &Fn() -> io::Result<()>,
-           block: &Fn() -> io::Result<()>) -> CargoResult<()> {
+/*
+fn acquire(_config: &Config,
+           _msg: &str,
+           _path: &Path,
+           _try: &Fn() -> io::Result<()>,
+           _block: &Fn() -> io::Result<()>) -> CargoResult<()> {
 
     // File locking on Unix is currently implemented via `flock`, which is known
     // to be broken on NFS. We could in theory just ignore errors that happen on
@@ -264,10 +268,10 @@ fn acquire(config: &Config,
     // there anyway.
     //
     // [1]: https://github.com/rust-lang/cargo/issues/2615
-    if is_on_nfs_mount(path) {
+    //if is_on_nfs_mount(path) {
         return Ok(())
-    }
-
+    //}
+    /*
     match try() {
         Ok(()) => return Ok(()),
 
@@ -319,7 +323,9 @@ fn acquire(config: &Config,
     fn is_on_nfs_mount(_path: &Path) -> bool {
         false
     }
+    */
 }
+*/
 
 fn create_dir_all(path: &Path) -> io::Result<()> {
     match create_dir(path) {

@@ -109,7 +109,7 @@ impl ProcessBuilder {
                 &format!("could not execute process `{}`", self.debug_string()), None, None))))
     }
 
-    #[cfg(windows)]
+    #[cfg(any(windows, target_os = "redox"))]
     pub fn exec_replace(&self) -> CargoResult<()> {
         self.exec()
     }

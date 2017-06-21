@@ -114,7 +114,7 @@ pub fn append(path: &Path, contents: &[u8]) -> CargoResult<()> {
     })
 }
 
-#[cfg(unix)]
+#[cfg(any(unix, target_os = "redox"))]
 pub fn path2bytes(path: &Path) -> CargoResult<&[u8]> {
     use std::os::unix::prelude::*;
     Ok(path.as_os_str().as_bytes())
@@ -128,7 +128,7 @@ pub fn path2bytes(path: &Path) -> CargoResult<&[u8]> {
     }
 }
 
-#[cfg(unix)]
+#[cfg(any(unix, target_os = "redox"))]
 pub fn bytes2path(bytes: &[u8]) -> CargoResult<PathBuf> {
     use std::os::unix::prelude::*;
     use std::ffi::OsStr;

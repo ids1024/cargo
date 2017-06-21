@@ -373,7 +373,7 @@ fn list_commands(config: &Config) -> BTreeSet<String> {
     commands
 }
 
-#[cfg(unix)]
+#[cfg(any(unix, target_os = "redox"))]
 fn is_executable<P: AsRef<Path>>(path: P) -> bool {
     use std::os::unix::prelude::*;
     fs::metadata(path)

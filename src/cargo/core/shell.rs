@@ -43,6 +43,7 @@ pub struct ShellConfig {
 
 enum AdequateTerminal {
     NoColor(Box<Write + Send>),
+    #[allow(dead_code)]
     Colored(Box<Terminal<Output=Box<Write + Send>> + Send>)
 }
 
@@ -194,11 +195,17 @@ impl Shell {
         }
     }
 
-    #[cfg(any(unix))]
+    #[cfg(unix)]
     fn get_term(out: Box<Write + Send>) -> CargoResult<AdequateTerminal> {
         Ok(Shell::get_terminfo_term(out))
     }
 
+    #[cfg(target_os = "redox")]
+    fn get_term(out: Box<Write + Send>) -> CargoResult<AdequateTerminal> {
+        Ok(NoColor(out))
+    }
+
+    #[allow(dead_code)]
     fn get_terminfo_term(out: Box<Write + Send>) -> AdequateTerminal {
         // Use `TermInfo::from_env()` and `TerminfoTerminal::supports_color()`
         // to determine if creation of a TerminfoTerminal is possible regardless

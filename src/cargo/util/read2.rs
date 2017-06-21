@@ -1,31 +1,28 @@
 pub use self::imp::read2;
 
-#[cfg(unix)]
+#[cfg(any(unix, target_os = "redox"))]
 mod imp {
-    use std::cmp;
+    //use std::cmp;
     use std::io::prelude::*;
     use std::io;
-    use std::mem;
-    use std::os::unix::prelude::*;
+    //use std::mem;
+    //use std::os::unix::prelude::*;
     use std::process::{ChildStdout, ChildStderr};
-    use libc;
+    //use libc;
 
     pub fn read2(mut out_pipe: ChildStdout,
                  mut err_pipe: ChildStderr,
                  mut data: &mut FnMut(bool, &mut Vec<u8>, bool)) -> io::Result<()> {
-        unsafe {
-            libc::fcntl(out_pipe.as_raw_fd(), libc::F_SETFL, libc::O_NONBLOCK);
-            libc::fcntl(err_pipe.as_raw_fd(), libc::F_SETFL, libc::O_NONBLOCK);
-        }
 
         let mut out_done = false;
         let mut err_done = false;
         let mut out = Vec::new();
         let mut err = Vec::new();
 
-        let max = cmp::max(out_pipe.as_raw_fd(), err_pipe.as_raw_fd());
+        //let max = cmp::max(out_pipe.as_raw_fd(), err_pipe.as_raw_fd());
         loop {
             // wait for either pipe to become readable using `select`
+            /*
             let r = unsafe {
                 let mut read: libc::fd_set = mem::zeroed();
                 if !out_done {
@@ -44,6 +41,7 @@ mod imp {
                 }
                 return Err(err)
             }
+            */
 
             // Read as much as we can from each pipe, ignoring EWOULDBLOCK or
             // EAGAIN. If we hit EOF, then this will happen because the underlying
