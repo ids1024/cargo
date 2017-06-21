@@ -28,7 +28,7 @@ flate2 = "0.2"
 git2 = {version = "0.6", default-features = false}
 git2-curl = "0.7"
 glob = "0.2"
-jobserver = { path = "/home/ian/Devel/src/redox/cookbook/jobserver-rs" }
+jobserver = { git = "https://github.com/ids1024/jobserver-rs", branch = "redox" }
 libc = "0.2"
 libgit2-sys = "0.6"
 log = "0.3"
@@ -69,9 +69,9 @@ test = false
 doc = false
 
 [replace]
-"thread-id:3.1.0" = {path = "/home/ian/Devel/src/redox/thread-id" }
-"filetime:0.1.10" = { path = "/home/ian/Devel/src/redox/cookbook/filetime" }
-"curl-sys:0.3.13" = { path = "/home/ian/Devel/src/redox/cookbook/curl-rust/curl-sys" }
-"curl:0.4.7" = { path = "/home/ian/Devel/src/redox/cookbook/curl-rust" }
-"libgit2-sys:0.6.12" = {path = "/home/ian/Devel/src/redox/cookbook/git2-rs/libgit2-sys"}
-"git2:0.6.6" = {path = "/home/ian/Devel/src/redox/cookbook/git2-rs"}
+"thread-id:3.1.0" = {git = "https://github.com/ids1024/thread-id", branch = "redox" }
+"filetime:0.1.10" = { git = "https://github.com/ids1024/filetime", branch = "redox" }
+"curl-sys:0.3.13" = { git = "https://github.com/ids1024/curl-rust", branch = "redox" }
+"curl:0.4.7" = { git = "https://github.com/ids1024/curl-rust", branch = "redox" }
+"libgit2-sys:0.6.12" = { git = "https://github.com/ids1024/git2-rs", branch = "redox" }
+"git2:0.6.6" = { git = "https://github.com/ids1024/git2-rs", branch = "redox" }
