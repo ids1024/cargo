@@ -490,12 +490,7 @@ fn link_targets<'a, 'cfg>(cx: &mut Context<'a, 'cfg>,
                     format!("failed to remove: {}", dst.display())
                 })?;
             }
-            fs::hard_link(src, dst)
-                 .or_else(|err| {
-                     debug!("hard link failed {}. falling back to fs::copy", err);
-                     fs::copy(src, dst).map(|_| ())
-                 })
-                 .chain_err(|| {
+            fs::copy(src, dst).map(|_| ()).chain_err(|| {
                      format!("failed to link or copy `{}` to `{}`",
                              src.display(), dst.display())
             })?;

@@ -9,6 +9,13 @@ use util::{internal, CargoResult};
 use util::errors::CargoResultExt;
 
 pub fn join_paths<T: AsRef<OsStr>>(paths: &[T], env: &str) -> CargoResult<OsString> {
+    let paths = paths.iter().map(|p| {
+        let mut path = p.as_ref().to_str().unwrap();
+        if path.starts_with("file:/") {
+            path = &path[5..];
+        }
+        path
+    }).collect::<Vec<_>>();
     env::join_paths(paths.iter()).or_else(|e| {
         let paths = paths.iter().map(Path::new).collect::<Vec<_>>();
         Err(internal(format!("failed to join path array: {:?}", paths))).chain_err(|| {
