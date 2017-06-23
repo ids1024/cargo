@@ -25,7 +25,7 @@ env_logger = "0.4"
 error-chain = "0.10.0"
 filetime = "0.1"
 flate2 = "0.2"
-git2 = {version = "0.6", default-features = false}
+git2 = {version = "0.6", default-features = false, features = ["https"]}
 git2-curl = "0.7"
 glob = "0.2"
 jobserver = { git = "https://github.com/ids1024/jobserver-rs", branch = "redox" }
