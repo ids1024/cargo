@@ -69,7 +69,6 @@ test = false
 doc = false
 
 [replace]
-"thread-id:3.1.0" = {git = "https://github.com/ids1024/thread-id", branch = "redox" }
 "filetime:0.1.10" = { git = "https://github.com/ids1024/filetime", branch = "redox" }
 "curl-sys:0.3.13" = { git = "https://github.com/ids1024/curl-rust", branch = "redox" }
 "curl:0.4.7" = { git = "https://github.com/ids1024/curl-rust", branch = "redox" }
